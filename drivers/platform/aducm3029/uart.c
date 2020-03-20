@@ -405,3 +405,23 @@ uint32_t uart_get_errors(struct uart_desc *desc)
 
 	return ret;
 }
+
+int32_t uart_register_callback(struct uart_desc *desc,
+			       void (*callback)(void *callback_ctx,
+					       uint32_t event, void *extra),
+			       void *callback_ctx)
+{
+	struct aducm_uart_desc *extra;
+
+	if (!desc)
+		return FAILURE;
+
+	extra = desc->extra;
+	/* Register callback */
+	adi_uart_RegisterCallback(extra->uart_handler, uart_callback, desc);
+
+	extra->callback = callback;
+	extra->callback_ctx = callback_ctx;
+
+	return SUCCESS;
+}

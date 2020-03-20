@@ -245,4 +245,13 @@ struct aducm_uart_desc {
 	uint32_t	waiting_write_callback;
 };
 
+/******************************************************************************/
+/************************ Functions Declarations ******************************/
+/******************************************************************************/
+
+int32_t uart_register_callback(struct uart_desc *desc,
+			       void (*callback)(void *callback_ctx,
+					       uint32_t event, void *extra),
+			       void *callback_ctx);
+
 #endif /* UART_H_ */
